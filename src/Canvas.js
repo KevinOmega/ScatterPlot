@@ -7,6 +7,9 @@ const Canvas = () => {
   const [drawed, setDrawed] = useState(false);
   const containerRef = useRef();
 
+  const doppingColor = "blue";
+  const withoutDopping = "#ffaa55";
+
   const fetchData = () => {
     fetch(
       "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json"
@@ -66,6 +69,16 @@ const Canvas = () => {
       .append("g")
       .style("transform", `translateX(${padding - 10}px)`)
       .call(yAxis);
+
+    svg
+      .selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("r", 5)
+      .attr("cx", (d) => xScale(d.Year))
+      .attr("cy", (d) => yScale(d.Time))
+      .attr("fill", (d) => (d.Doping === "" ? withoutDopping : doppingColor));
   }, [data]);
 
   useEffect(() => {
