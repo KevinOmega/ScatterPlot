@@ -7,7 +7,7 @@ const Canvas = () => {
   const [drawed, setDrawed] = useState(false);
   const containerRef = useRef();
 
-  const doppingColor = "blue";
+  const doppingColor = "#00aaff";
   const withoutDopping = "#ffaa55";
 
   const fetchData = () => {
@@ -63,11 +63,13 @@ const Canvas = () => {
     svg
       .append("g")
       .style("transform", `translateY(${height - padding + 10}px)`)
+      .attr("id", "x-axis")
       .call(xAxis);
 
     svg
       .append("g")
       .style("transform", `translateX(${padding - 10}px)`)
+      .attr("id", "y-axis")
       .call(yAxis);
 
     svg
@@ -75,7 +77,10 @@ const Canvas = () => {
       .data(data)
       .enter()
       .append("circle")
-      .attr("r", 5)
+      .attr("class", "dot")
+      .attr("data-xvalue", (d) => d.Year)
+      .attr("data-yvalue", (d) => d.Time)
+      .attr("r", 6)
       .attr("cx", (d) => xScale(d.Year))
       .attr("cy", (d) => yScale(d.Time))
       .attr("fill", (d) => (d.Doping === "" ? withoutDopping : doppingColor));
