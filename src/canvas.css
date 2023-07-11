@@ -23,7 +23,30 @@
 
 #tooltip {
   position: absolute;
-  background-color: #00fbff;
+  background-color: #00ffb7;
   padding: 1rem;
   border: 1px solid black;
+}
+
+#legend {
+  position: absolute;
+  left: 70%;
+  top: 70%;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#legend .item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+#legend .item span {
+  display: block;
+  content: "";
+  border: 1px solid black;
+  width: 1rem;
+  height: 1rem;
 }

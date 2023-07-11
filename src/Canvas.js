@@ -90,14 +90,17 @@ const Canvas = () => {
       .attr("cy", (d) => yScale(d.Time))
       .attr("fill", (d) => (d.Doping === "" ? withoutDopping : doppingColor))
       .on("mouseover", (e, d) => {
-        console.log(d);
         tooltip
           .style("opacity", 1)
           .style("top", yScale(d.Time) + "px")
           .style("left", 20 + xScale(d.Year) + "px")
           .html(
             `Name : ${d.Name} <br/>Time : ${d.Seconds} s <br/>Year : ${d.Year}`
-          );
+          )
+          .attr("data-year", xScale(d.Year));
+      })
+      .on("mouseout", (e, d) => {
+        tooltip.style("opacity", 0).style("left", width + "px");
       });
   }, [data]);
 
@@ -118,6 +121,16 @@ const Canvas = () => {
         <h1 id="#title">Doping in Professional Bicycle Racing</h1>
       </div>
       <div id="canvas-container" ref={containerRef}></div>
+      <div id="legend">
+        <div className="item">
+          <span style={{ backgroundColor: withoutDopping }}></span> No doping
+          allegations
+        </div>
+        <div className="item">
+          <span style={{ backgroundColor: doppingColor }}></span> Doping
+          allegations
+        </div>
+      </div>
     </div>
   );
 };
