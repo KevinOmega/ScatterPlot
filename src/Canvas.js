@@ -60,6 +60,11 @@ const Canvas = () => {
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale).tickFormat(timeFormat);
 
+    const tooltip = d3
+      .select("#canvas-container")
+      .append("div")
+      .attr("id", "tooltip")
+      .style("opacity", 0);
     svg
       .append("g")
       .style("transform", `translateY(${height - padding + 10}px)`)
@@ -83,7 +88,17 @@ const Canvas = () => {
       .attr("r", 6)
       .attr("cx", (d) => xScale(d.Year))
       .attr("cy", (d) => yScale(d.Time))
-      .attr("fill", (d) => (d.Doping === "" ? withoutDopping : doppingColor));
+      .attr("fill", (d) => (d.Doping === "" ? withoutDopping : doppingColor))
+      .on("mouseover", (e, d) => {
+        console.log(d);
+        tooltip
+          .style("opacity", 1)
+          .style("top", yScale(d.Time) + "px")
+          .style("left", 20 + xScale(d.Year) + "px")
+          .html(
+            `Name : ${d.Name} <br/>Time : ${d.Seconds} s <br/>Year : ${d.Year}`
+          );
+      });
   }, [data]);
 
   useEffect(() => {
